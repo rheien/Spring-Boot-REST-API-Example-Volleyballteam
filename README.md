@@ -15,11 +15,215 @@ Of course, you can also use Postman or any other REST client to test the APIs.
 The REST API can be accessed at http://localhost:8080/api/teams.
 
 Following endpoints are available in the application:
-- GET /api/teams - Get all teams
-- GET /api/teams/{name} - Get team by name
-- GET /api/teams/players - Get all players
-- GET /api/teams/players/{id} - Get player by id
-- GET /api/teams/{name}/players - Get all players by team name
-- POST /api/teams/team-management - Create or update a team 
-- POST /api/teams/team-management/players - Add a player to a team
-- DELETE /api/teams/team-management/players - Remove a player from a team
+
+<details>
+<summary><code>GET</code> <code>http://localhost:8080/api/teams</code></summary>
+
+As a curl command:
+```bash
+curl --location 'http://localhost:8080/api/teams'
+```
+
+Get all teams in response as JSON:
+```bash
+[
+    {
+        "name": "Füchse",
+        "trainer": "Hermann",
+        "location": "Berlin",
+        "players": [
+            {
+                "id": "1",
+                "name": "Hans",
+                "position": "Libero"
+            }
+        ]
+    },
+    {
+        "name": "Dolphin",
+        "trainer": "Joos",
+        "location": "Stuttgart",
+        "players": []
+    }
+]
+```
+</details>
+
+<details>
+<summary><code>GET</code> <code>http://localhost:8080/api/teams/{name}</code></summary>
+
+As a curl command:
+```bash
+curl --location 'http://localhost:8080/api/teams/Füchse'
+```
+
+Get a team by name in response as JSON:
+```bash
+{
+    "name": "Füchse",
+    "trainer": "Hermann",
+    "location": "Berlin",
+    "players": [
+        {
+            "id": "1",
+            "name": "Hans",
+            "position": "Libero"
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary><code>GET</code> <code>http://localhost:8080/api/teams/players</code></summary>
+
+As a curl command:
+```bash
+curl --location 'http://localhost:8080/api/teams/players'
+```
+
+Get all players in response as JSON:
+```bash
+[
+    {
+        "id": "1",
+        "name": "Hans",
+        "position": "Libero"
+    }
+]
+```
+</details>
+
+<details>
+<summary><code>GET</code> <code>http://localhost:8080/api/teams/players/{id}</code></summary>
+
+As a curl command:
+```bash
+curl --location 'http://localhost:8080/api/teams/players/1'
+```
+
+Get a player by id in response as JSON:
+```bash
+{
+    "id": "1",
+    "name": "Hans",
+    "position": "Libero"
+}
+```
+</details>
+
+<details>
+<summary><code>GET</code> <code>http://localhost:8080/api/teams/{name}/players</code></summary>
+
+As a curl command:
+```bash
+curl --location 'http://localhost:8080/api/teams/Füchse/players'
+```
+
+Get all players by team name in response as JSON:
+```bash
+[
+    {
+        "id": "1",
+        "name": "Hans",
+        "position": "Libero"
+    }
+]
+```
+</details>
+
+<details>
+<summary><code>POST</code> <code>http://localhost:8080/api/teams/team-management</code></summary>
+
+As a curl command:
+```bash
+curl --location --request POST 'http://localhost:8080/api/teams/team-management' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Feuer",
+    "trainer": "Müller",
+    "location": "Hannover"
+}'
+```
+
+Create or update a team in response as JSON:
+```bash
+{
+    "name": "Feuer",
+    "trainer": "Müller",
+    "location": "Hannover",
+    "players": []
+}
+```
+</details>
+
+<details>
+<summary><code>POST</code> <code>http://localhost:8080/api/teams/team-management/players</code></summary>
+
+As a curl command:
+```bash
+curl --location --request POST 'http://localhost:8080/api/teams/team-management/players' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Jochen",
+    "position": "Opposite Hitter",
+    "team": {
+        "name": "Füchse"
+    }
+}'
+```
+
+Add a player to a team in response as JSON:
+```bash
+{
+    "name": "Füchse",
+    "trainer": "Hermann",
+    "location": "Berlin",
+    "players": [
+        {
+            "id": "1",
+            "name": "Hans",
+            "position": "Libero"
+        },
+        {
+            "id": "2",
+            "name": "Jochen",
+            "position": "Opposite Hitter"
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary><code>DELETE</code> <code>http://localhost:8080/api/teams/team-management/players</code></summary>
+
+As a curl command:
+```bash
+curl --location --request DELETE 'http://localhost:8080/api/teams/team-management/players' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Jochen",
+    "position": "Opposite Hitter",
+    "team": {
+        "name": "Füchse"
+    }
+}'
+```
+
+Remove a player from a team in response as JSON:
+```bash
+{
+    "name": "Füchse",
+    "trainer": "Hermann",
+    "location": "Berlin",
+    "players": [
+        {
+            "id": "1",
+            "name": "Hans",
+            "position": "Libero"
+        }
+    ]
+}
+```
+</details>
